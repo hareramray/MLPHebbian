@@ -214,10 +214,10 @@ Per epoch the tuner:
 
 ```mermaid
 flowchart LR
-  A[Snapshot weights] --> B[Try (lr, alpha)]
-  B --> C[Mini-train few steps]
-  C --> D[Val loss]
-  D --> E{More?}
+	A[Snapshot weights] --> B[Try lr alpha]
+	B --> C[Mini train few steps]
+	C --> D[Val loss]
+	D --> E{More candidates}
   E -- yes --> B
   E -- no --> F[Pick best]
   F --> G[Restore weights]
