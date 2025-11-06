@@ -103,22 +103,22 @@ python src\train.py --dataset health --epochs 12 --batch-size 64 --lr 0.01 --use
 
 ```mermaid
 flowchart TD
-	A[Start] --> B{Dataset}
-	B -- study --> C[Load CSV: study_success.csv]
-	B -- health --> C2[Load CSV: health_risk.csv]
-	C --> D[Split train/val/test]
-	C2 --> D
-	D --> E[Standardize features]
-	E --> F[Build MLP]
-	F --> G{Per epoch}
-	G -->|optional| H[Meta tuner suggests lr, hebbian α]
-	G --> I[Mini-batch training]
-	H --> I
-	I --> J[Val loss]
-	J -->|improves| K[Save best weights]
-	J -->|next epoch| G
-	K --> L[Test]
-	L --> M[Report metrics]
+  A[Start] --> B{Dataset}
+  B -- study --> C[Load CSV: study_success.csv]
+  B -- health --> C2[Load CSV: health_risk.csv]
+  C --> D[Split train/val/test]
+  C2 --> D
+  D --> E[Standardize features]
+  E --> F[Build MLP]
+  F --> G{Per epoch}
+  G -->|optional| H[Meta tuner suggests lr, hebbian alpha]
+  G --> I[Mini-batch training]
+  H --> I
+  I --> J[Val loss]
+  J -->|improves| K[Save best weights]
+  J -->|next epoch| G
+  K --> L[Test]
+  L --> M[Report metrics]
 ```
 
 ### Architectures
@@ -214,14 +214,14 @@ Per epoch the tuner:
 
 ```mermaid
 flowchart LR
-	A[Snapshot weights] --> B[Try (lr, α)]
-	B --> C[Mini-train few steps]
-	C --> D[Val loss]
-	D --> E{More?}
-	E -- yes --> B
-	E -- no --> F[Pick best]
-	F --> G[Restore weights]
-	G --> H[Train epoch]
+  A[Snapshot weights] --> B[Try (lr, alpha)]
+  B --> C[Mini-train few steps]
+  C --> D[Val loss]
+  D --> E{More?}
+  E -- yes --> B
+  E -- no --> F[Pick best]
+  F --> G[Restore weights]
+  G --> H[Train epoch]
 ```
 
 ### Multi-task (health dataset)
