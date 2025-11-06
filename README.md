@@ -185,6 +185,8 @@ $$
 \end{bmatrix}
 $$
 
+Plain-text (fallback): [0.9, 0.1]^T x [0.8, 0.2] = [[0.72, 0.18], [0.08, 0.02]]
+
 Decay term uses mean(y^2)·W. With W=0 initially, it’s 0. Thus:
 
 $$
