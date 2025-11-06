@@ -137,30 +137,30 @@ Weight update per batch blends supervised gradient descent with an optional Hebb
 
 Backprop step (conceptual):
 
-$$
-\Delta W_{bp} = -\eta\; \nabla_W \mathcal{L}\; (\text{with momentum/Adam})
-$$
+```
+dW_bp = -eta * grad_W(L)  # with momentum/Adam
+```
 
 L2 weight decay:
 
-$$
-\nabla_W \mathcal{L} \leftarrow \nabla_W \mathcal{L} + \lambda W
-$$
+```
+grad_W(L) <- grad_W(L) + lambda * W
+```
 
 Oja-like Hebbian increment (mini-batch; pre-activations x, post-activations y):
 
-$$
-\Delta W_{hebb} = \alpha\Big(\frac{y^T x}{B} - \gamma \; (\mu_{y^2}\, W)\Big)
-$$
+```
+dW_hebb = alpha * ( (y^T x)/B - gamma * (mu_y2 * W) )
+```
 
 Final update:
 
-$$
-W \leftarrow W - \text{OptStep}(\nabla_W\mathcal{L}) + \Delta W_{hebb}
-$$
+```
+W <- W - OptStep(grad_W(L)) + dW_hebb
+```
 
 where alpha is `--hebbian-alpha`, gamma is `--hebbian-decay`.
-Here, $\mu_{y^2}$ denotes the mini-batch mean of $y^2$.
+Here, mu_y2 denotes the mini-batch mean of y^2.
 
 #### Hebbian effect per layer (tiny example)
 
@@ -169,38 +169,21 @@ Consider one mini-batch sample with:
 - post-activations y = [0.9, 0.1]
 - alpha = 0.02, gamma = 0.01, W starts at 0
 
-Outer product term (B=1): y^T x =
+Outer product term (B=1):
 
-$$
-\begin{bmatrix}
-0.9\\ 0.1
-\end{bmatrix}
-\begin{bmatrix}
-0.8 & 0.2
-\end{bmatrix}
-=
-\begin{bmatrix}
-0.72 & 0.18\\
-0.08 & 0.02
-\end{bmatrix}
-$$
-
-Plain-text (fallback): [0.9, 0.1]^T x [0.8, 0.2] = [[0.72, 0.18], [0.08, 0.02]]
+```
+[0.9, 0.1]^T x [0.8, 0.2] = [[0.72, 0.18],
+							  [0.08, 0.02]]
+```
 
 Decay term uses mean(y^2)·W. With W=0 initially, it’s 0. Thus:
 
-$$
-\Delta W_{hebb} = 0.02 \times
-\begin{bmatrix}
-0.72 & 0.18\\
-0.08 & 0.02
-\end{bmatrix}
-=
-\begin{bmatrix}
-0.0144 & 0.0036\\
-0.0016 & 0.0004
-\end{bmatrix}
-$$
+```
+dW_hebb = 0.02 * [[0.72, 0.18],
+						 [0.08, 0.02]]
+		  = [[0.0144, 0.0036],
+			  [0.0016, 0.0004]]
+```
 
 Interpretation: co-activation of input and output units increases their connecting weights; the Oja decay term keeps weights bounded over time.
 
@@ -235,9 +218,9 @@ When `--multi-task` is set:
 
 Combined loss:
 
-$$
-\mathcal{L} = \mathrm{BCEWithLogits}(\hat{y}_{cls}, y_{cls}) + w_{mt}\, \mathrm{MSE}(\hat{y}_{score}, y_{score})
-$$
+```
+L = BCEWithLogits(yhat_cls, y_cls) + w_mt * MSE(yhat_score, y_score)
+```
 
 with `w_mt = --mt-weight`.
 
