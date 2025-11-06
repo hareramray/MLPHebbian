@@ -150,7 +150,7 @@ $$
 Oja-like Hebbian increment (mini-batch; pre-activations x, post-activations y):
 
 $$
-\Delta W_{hebb} = \alpha\Big(\frac{y^T x}{B} - \gamma \; (\operatorname{mean}(y^2)\; W)\Big)
+\Delta W_{hebb} = \alpha\Big(\frac{y^T x}{B} - \gamma \; (\mu_{y^2}\, W)\Big)
 $$
 
 Final update:
@@ -233,7 +233,7 @@ When `--multi-task` is set:
 Combined loss:
 
 $$
-\mathcal{L} = \operatorname{BCEWithLogits}(\hat{y}_{cls}, y_{cls}) + w_{mt}\, \operatorname{MSE}(\hat{y}_{score}, y_{score})
+\mathcal{L} = \mathrm{BCEWithLogits}(\hat{y}_{cls}, y_{cls}) + w_{mt}\, \mathrm{MSE}(\hat{y}_{score}, y_{score})
 $$
 
 with `w_mt = --mt-weight`.
