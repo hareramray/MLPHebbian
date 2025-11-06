@@ -159,14 +159,15 @@ $$
 W \leftarrow W - \text{OptStep}(\nabla_W\mathcal{L}) + \Delta W_{hebb}
 $$
 
-where α is `--hebbian-alpha`, γ is `--hebbian-decay`.
+where alpha is `--hebbian-alpha`, gamma is `--hebbian-decay`.
+Here, $\mu_{y^2}$ denotes the mini-batch mean of $y^2$.
 
 #### Hebbian effect per layer (tiny example)
 
 Consider one mini-batch sample with:
 - pre-activations x = [0.8, 0.2]
 - post-activations y = [0.9, 0.1]
-- α = 0.02, γ = 0.01, W starts at 0
+- alpha = 0.02, gamma = 0.01, W starts at 0
 
 Outer product term (B=1): y^T x =
 
@@ -207,10 +208,10 @@ File: `src/meta.py`
 
 Per epoch the tuner:
 1. Snapshots current weights
-2. Tries a small set of candidates (lr, α)
+2. Tries a small set of candidates (lr, alpha)
 3. For each, runs a few quick mini-steps on a subset
 4. Picks the candidate with best val loss
-5. Restores weights and uses that lr, α for the real epoch
+5. Restores weights and uses that lr, alpha for the real epoch
 
 ```mermaid
 flowchart LR
